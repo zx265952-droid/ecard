@@ -13,7 +13,8 @@ const card = {type:"flex", altText:"呂奕篁 電子名片", contents:{type:"bub
   hero:{type:"image", url:PAGE+"front_art.png", size:"full", aspectRatio:"5:3", aspectMode:"cover"},
   body:{type:"box", layout:"vertical", spacing:"xs", contents:[
     {type:"text", text:"呂奕篁", weight:"bold", size:"xl", color:"#001229"},
-    {type:"text", text:"國祥營造｜國敬工程　特助", size:"sm", color:"#1C2733", weight:"bold", wrap:true, margin:"sm"},
+    {type:"text", text:"國祥營造｜國敬工程　特助", size:"sm", color:"#1C2733", weight:"bold", wrap:true, margin:"sm",
+     contents:[{type:"span", text:"國祥營造｜國敬工程　"}, {type:"span", text:"特助", color:"#B88D4F"}]},
     {type:"text", text:"土木技師・人身、財產保險經紀人 國家考試及格", size:"xs", color:"#6B7682", wrap:true}]},
   footer:{type:"box", layout:"vertical", spacing:"sm", contents:[
     {type:"button", style:"primary", color:"#001229", action:{type:"uri", label:"開啟電子名片", uri:PAGE}},

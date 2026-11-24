@@ -1,0 +1,37 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex"><title>分享電子名片</title><style>
+*{box-sizing:border-box;margin:0}body{min-height:100vh;background:#e9edf2;font-family:'Microsoft JhengHei','PingFang TC',sans-serif;padding:18px;color:#001229}
+main{max-width:420px;margin:auto;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 2px 12px #0002}img{display:block;width:100%}
+.b{padding:20px 22px 24px}h1{font-size:22px}p{margin-top:6px;color:#556;font-size:15px;line-height:1.6;min-height:24px}
+button{width:100%;margin-top:14px;padding:15px;border:0;border-radius:10px;background:#001229;color:#fff;font:700 17px inherit;font-family:inherit}button:disabled{opacity:.45}
+</style></head><body><main><img src="ecard_connor_hero.png" alt="呂奕篁 電子名片"><div class="b"><h1>分享電子名片</h1><p id="msg">準備中…</p><button id="go" disabled>選擇好友或群組</button></div></main>
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+<script>
+const LIFF_ID = "2012770271-Ogi27FNx";
+const PAGE = "https://zx265952-droid.github.io/ecard/";
+const card = {type:"flex", altText:"呂奕篁 電子名片", contents:{type:"bubble", size:"mega",
+  hero:{type:"image", url:PAGE+"ecard_connor_hero.png", size:"full", aspectRatio:"20:13", aspectMode:"cover"},
+  body:{type:"box", layout:"vertical", spacing:"xs", contents:[
+    {type:"text", text:"呂奕篁", weight:"bold", size:"xl", color:"#001229"},
+    {type:"text", text:"特助 / 土木技師・國祥營造｜國敬工程", size:"sm", color:"#555566", wrap:true}]},
+  footer:{type:"box", layout:"vertical", contents:[
+    {type:"button", style:"primary", color:"#001229", action:{type:"uri", label:"開啟電子名片", uri:PAGE}}]}}};
+const msg = document.getElementById("msg"), go = document.getElementById("go");
+const say = t => { msg.textContent = t; };
+(async () => {
+  try {
+    await liff.init({liffId: LIFF_ID});
+    if (!liff.isLoggedIn()) { liff.login({redirectUri: location.href}); return; }
+    if (!liff.isApiAvailable("shareTargetPicker")) { say("這個環境不能分享，請確認 LIFF 的 Share target picker 已開啟，並用 LINE 開啟。"); return; }
+    say("按下按鈕，選擇要傳給誰。"); go.disabled = false;
+  } catch (e) { say("開啟失敗：" + (e.message || e)); }
+})();
+go.addEventListener("click", async () => {
+  go.disabled = true;
+  try {
+    const r = await liff.shareTargetPicker([card]);
+    say(r ? "已傳送。可以再傳給其他人。" : "已取消，沒有傳送。");
+  } catch (e) { say("傳送失敗：" + (e.message || e)); }
+  go.disabled = false;
+});
+</script></body></html>
